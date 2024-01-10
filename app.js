@@ -9,18 +9,25 @@ const otpforgotrouter=require('./routes/otpforgot');
 const otpsignuprouter=require('./routes/otpsignup');
 const signuprouter=require('./routes/signup');
 const updateroter =require('./routes/update');
-const mongoConnect=require('./util/database');
+const connectdb=require('./util/database');
+const session =require('express-session');
 
 app.set('view engine','ejs');
 app.set('views','views');
 app.use(express.static("public"));
 app.use(bodyparser.urlencoded({extended:true}));
 app.use(forgotrouter);
+app.use(session({
+  secret: 'your-secret-key',
+  resave: false,
+  saveUninitialized: true
+}));
 app.use(otpsignuprouter);
 app.use(otpforgotrouter);
 app.use(signuprouter);
 app.use(updateroter);
-
+ 
+connectdb();
 
 app.get("/",(req,res,next)=>{
     res.render('signin',{title:'Sign-in'});
