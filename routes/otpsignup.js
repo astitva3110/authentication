@@ -6,20 +6,18 @@ const User=require('../models/user');
 const signup=require('../routes/signup');
 
 router.get('/otpsignup',(req,res,next)=>{
-  const { email } = req.session;
-  
-    res.render('otpsignup',{title:'One Time Password',email});
+    res.render('otpsignup',{title:'One Time Password'});
 });
 
 router.post('/otpsignup', async(req,res)=>{
     connectdb();
     try {
-      const {email ,otp} = req.body;
+      const {otp} = req.body;
   
-      const user = await User.findOne({email,otp});
-      console.log({email,otp});
+      const user = await User.findOne({otp});
+      console.log({otp});
       if (!user) {
-        return res.render('otpsignup', { title:"OTPSIGNUP" ,email, error: 'Invalid verification code.' });
+        return res.render('otpsignup', { title:"OTPSIGNUP",error: 'Invalid verification code.' });
       }
   
       user.verified = true;

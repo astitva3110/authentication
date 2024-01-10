@@ -11,17 +11,16 @@ const signuprouter=require('./routes/signup');
 const updateroter =require('./routes/update');
 const connectdb=require('./util/database');
 const session =require('express-session');
-
-app.set('view engine','ejs');
-app.set('views','views');
-app.use(express.static("public"));
-app.use(bodyparser.urlencoded({extended:true}));
-app.use(forgotrouter);
 app.use(session({
   secret: 'your-secret-key',
   resave: false,
   saveUninitialized: true
 }));
+app.set('view engine','ejs');
+app.set('views','views');
+app.use(express.static("public"));
+app.use(bodyparser.urlencoded({extended:true}));
+app.use(forgotrouter);
 app.use(otpsignuprouter);
 app.use(otpforgotrouter);
 app.use(signuprouter);
