@@ -5,7 +5,7 @@ const nodemailer=require('nodemailer')
 const bcrypt=require('bcrypt');
 const connectdb=require('../util/database');
 const User=require('../models/user')
-const env =require('dotenv').config();
+require('dotenv').config();
 
 router.get("/signup",(req,res,next)=>{
   res.render('signup',{tittle:'Sign-up'});
@@ -14,8 +14,8 @@ router.get("/signup",(req,res,next)=>{
 const transporter = nodemailer.createTransport({
   service: 'gmail',
   auth: {
-    user: 'astitvakumarrai3110@gmail.com',
-    pass: 'dynuwikseuumiaei',
+    user: process.env.user,
+    pass: process.env.pass,
   },
 });
 
@@ -37,7 +37,7 @@ router.post('/signup', async (req, res) => {
     const newUser = new User({ user,email, password:hass ,otp});
     await newUser.save();
     const mailOptions = {
-      from: 'astitvakumarrai3110@gmail.com',
+      from: process.env.user,
       to: email,
       subject: 'Email Verification',
       text: `Your verification code is: ${otp}`,
