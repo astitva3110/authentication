@@ -3,11 +3,11 @@ const { Schema, model } = require('mongoose');
 const MongoClient=mongodb.MongoClient;
 const mongoose=require('mongoose');
 mongoose.Promise=global.Promise;
-
+require('dotenv').config();
 
 const connectdb=async()=>{
 
- mongoose.connect('mongodb+srv://astitvarai3110:85pW7mOrc9Nlu1up@cluster0.9vz1igv.mongodb.net/?retryWrites=true&w=majority')
+ mongoose.connect(process.env.mongo)
 
 .then(result=>{
     console.log("connected to the database")
